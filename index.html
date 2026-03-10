@@ -312,19 +312,10 @@
                 </div>
 
                 <!-- PLACE YOUR IMAGES HERE -->
-                <!-- To add images:
-                     1. Create an 'images' folder in the same directory as this HTML file
-                     2. Put your images in the 'images' folder
-                     3. Replace 'placeholder1.jpg' with your actual image filenames
-                -->
                 <div class="fishing-images">
-                    <!-- Example images - replace with your own -->
-                    <img src="images/fishing1.png" alt="Рыбалка 1" onerror="this.src='https://via.placeholder.com/400x300?text=Фото+1'">
-                    <img src="images/fishing2.png" alt="Рыбалка 2" onerror="this.src='https://via.placeholder.com/400x300?text=Фото+2'">
-                    <!--img src="images/fishing3.jpg" alt="Рыбалка 3" onerror="this.src='https://via.placeholder.com/400x300?text=Фото+3'">
-                    <img src="images/fishing4.jpg" alt="Рыбалка 4" onerror="this.src='https://via.placeholder.com/400x300?text=Фото+4'">
-                    
-                    <!-- Add more images by copying the line above and changing the src -->
+                    <img src="images/fishing1.png" alt="Рыбалка 1" onclick="openLightbox(this.src)">
+                    <img src="images/fishing2.png" alt="Рыбалка 2" onclick="openLightbox(this.src)">
+                    <!-- Add more images as needed -->
                 </div>
             </div>
         </div>
@@ -336,12 +327,7 @@
             <div class="redux-content">
                 <h2>📦 Доступные редуксы</h2>
                 
-                <!-- PLACE YOUR REDUX LINKS HERE -->
-                <!-- To add redux links:
-                     Simply update the href with your download link (Google Drive, Dropbox, Mega, etc.)
-                -->
                 <ul class="redux-list">
-                    <!-- Example redux items - replace with your own links -->
                     <li class="redux-item">
                         <div>
                             <span class="redux-name">Redux Pack v1.0</span>
@@ -365,20 +351,15 @@
                         </div>
                         <a href="https://mega.nz/file/YOUR_FILE" target="_blank" class="download-btn">Скачать</a>
                     </li>
-
-                    <!-- Add more redux items by copying the <li> block above -->
-                    <!-- 
-                    <li class="redux-item">
-                        <div>
-                            <span class="redux-name">Your Redux Name</span>
-                            <span class="redux-size">(Size)</span>
-                        </div>
-                        <a href="YOUR_DOWNLOAD_LINK" target="_blank" class="download-btn">Скачать</a>
-                    </li>
-                    -->
                 </ul>
             </div>
         </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" class="lightbox-content" onclick="event.stopPropagation()">
     </div>
 
     <script>
@@ -407,13 +388,13 @@
             const lightboxImg = document.getElementById('lightbox-img');
             lightboxImg.src = imageSrc;
             lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
+            document.body.style.overflow = 'auto';
         }
 
         // Close lightbox with Escape key
