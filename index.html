@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рыбалка и Редуксы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: #ff8800;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255, 136, 0, 0.5);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            color: #ffaa44;
+        }
+
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .section-card {
+            background: #1a1a1a;
+            border: 2px solid #ff8800;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            box-shadow: 0 10px 30px rgba(255, 136, 0, 0.2);
+        }
+
+        .section-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 136, 0, 0.4);
+            border-color: #ffaa44;
+        }
+
+        .section-card h2 {
+            font-size: 2em;
+            color: #ff8800;
+            margin-bottom: 20px;
+        }
+
+        .section-card p {
+            color: #cccccc;
+            font-size: 1.1em;
+        }
+
+        .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            filter: grayscale(0%) brightness(1.2);
+        }
+
+        /* Page styles */
+        .page {
+            display: none;
+            background: #1a1a1a;
+            border: 2px solid #ff8800;
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(255, 136, 0, 0.3);
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-btn {
+            background: #ff8800;
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #ffaa44;
+            transform: scale(1.05);
+        }
+
+        .fishing-content h2 {
+            color: #ff8800;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .fishing-text {
+            line-height: 1.8;
+            color: #dddddd;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .fishing-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .fishing-images img {
+            width: 100%;
+            border-radius: 10px;
+            border: 2px solid #ff8800;
+            box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .fishing-images img:hover {
+            transform: scale(1.05);
+            border-color: #ffaa44;
+        }
+
+        .redux-list {
+            list-style: none;
+        }
+
+        .redux-item {
+            background: #2d2d2d;
+            border: 2px solid #ff8800;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s, border-color 0.3s, transform 0.2s;
+        }
+
+        .redux-item:hover {
+            background: #3a3a3a;
+            border-color: #ffaa44;
+            transform: translateX(5px);
+        }
+
+        .redux-name {
+            font-weight: bold;
+            color: #ff8800;
+            font-size: 1.1em;
+        }
+
+        .redux-size {
+            color: #aaaaaa;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        .download-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background: #218838;
+        }
+
+        .redux-content h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Main Page -->
+        <div id="mainPage">
+            <header>
+                <h1>🎣 Добро пожаловать 🎮</h1>
+                <p>Выберите раздел для просмотра</p>
+            </header>
+
+            <div class="sections">
+                <div class="section-card" onclick="showPage('fishing')">
+                    <div class="icon">🎣</div>
+                    <h2>Рыбалка</h2>
+                    <p>Фотографии и истории о рыбалке</p>
+                </div>
+
+                <div class="section-card" onclick="showPage('redux')">
+                    <div class="icon">📦</div>
+                    <h2>Редуксы</h2>
+                    <p>Скачать доступные редуксы</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fishing Page -->
+        <div id="fishingPage" class="page">
+            <button class="back-btn" onclick="showPage('main')">← Назад на главную</button>
+            
+            <div class="fishing-content">
+                <h2>🎣 Рыбалка</h2>
+                
+                <!-- PLACE YOUR TEXT HERE -->
+                <div class="fishing-text">
+                    <p>
+                        Здесь вы можете разместить текст о рыбалке. Расскажите о своих любимых местах, 
+                        впечатлениях и незабываемых моментах на рыбалке.
+                    </p>
+                    <p>
+                        Добавьте описание техник ловли, интересных случаев или советы для начинающих рыбаков.
+                    </p>
+                </div>
+
+                <!-- PLACE YOUR IMAGES HERE -->
+                <!-- To add images:
+                     1. Create an 'images' folder in the same directory as this HTML file
+                     2. Put your images in the 'images' folder
+                     3. Replace 'placeholder1.jpg' with your actual image filenames
+                -->
+                <div class="fishing-images">
+                    <!-- Example images - replace with your own -->
+                    <img src="images/fishing1.jpg" alt="Рыбалка 1" onerror="this.src='https://via.placeholder.com/400x300?text=Фото+1'">
+                    <img src="images/fishing2.jpg" alt="Рыбалка 2" onerror="this.src='https://via.placeholder.com/400x300?text=Фото+2'">
+                    <img src="images/fishing3.jpg" alt="Рыбалка 3" onerror="this.src='https://via.placeholder.com/400x300?text=Фото+3'">
+                    <img src="images/fishing4.jpg" alt="Рыбалка 4" onerror="this.src='https://via.placeholder.com/400x300?text=Фото+4'">
+                    
+                    <!-- Add more images by copying the line above and changing the src -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Redux Page -->
+        <div id="reduxPage" class="page">
+            <button class="back-btn" onclick="showPage('main')">← Назад на главную</button>
+            
+            <div class="redux-content">
+                <h2>📦 Доступные редуксы</h2>
+                
+                <!-- PLACE YOUR REDUX ARCHIVES HERE -->
+                <!-- To add redux files:
+                     1. Create a 'downloads' folder in the same directory as this HTML file
+                     2. Put your .rar files in the 'downloads' folder
+                     3. Update the href and file information below
+                -->
+                <ul class="redux-list">
+                    <!-- Example redux items - replace with your own -->
+                    <li class="redux-item">
+                        <div>
+                            <span class="redux-name">Redux Pack v1.0</span>
+                            <span class="redux-size">(15 MB)</span>
+                        </div>
+                        <a href="downloads/redux_v1.rar" class="download-btn" download>Скачать</a>
+                    </li>
+
+                    <li class="redux-item">
+                        <div>
+                            <span class="redux-name">Redux Pack v2.0</span>
+                            <span class="redux-size">(23 MB)</span>
+                        </div>
+                        <a href="downloads/redux_v2.rar" class="download-btn" download>Скачать</a>
+                    </li>
+
+                    <li class="redux-item">
+                        <div>
+                            <span class="redux-name">Redux Ultimate Collection</span>
+                            <span class="redux-size">(45 MB)</span>
+                        </div>
+                        <a href="downloads/redux_ultimate.rar" class="download-btn" download>Скачать</a>
+                    </li>
+
+                    <!-- Add more redux items by copying the <li> block above -->
+                    <!-- 
+                    <li class="redux-item">
+                        <div>
+                            <span class="redux-name">Your Redux Name</span>
+                            <span class="redux-size">(Size)</span>
+                        </div>
+                        <a href="downloads/your-file.rar" class="download-btn" download>Скачать</a>
+                    </li>
+                    -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(page) {
+            // Hide all pages
+            document.getElementById('mainPage').style.display = 'none';
+            document.getElementById('fishingPage').classList.remove('active');
+            document.getElementById('reduxPage').classList.remove('active');
+
+            // Show selected page
+            if (page === 'main') {
+                document.getElementById('mainPage').style.display = 'block';
+            } else if (page === 'fishing') {
+                document.getElementById('fishingPage').classList.add('active');
+            } else if (page === 'redux') {
+                document.getElementById('reduxPage').classList.add('active');
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Initialize - show main page
+        showPage('main');
+    </script>
+</body>
+</html>
